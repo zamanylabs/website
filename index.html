@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ZamanyLab — Centre d'Innovation Numérique</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green: #4a9b3c;
+    --green-light: #6abf5b;
+    --green-dim: rgba(74,155,60,0.15);
+    --green-border: rgba(74,155,60,0.35);
+    --bg: #080a08;
+    --bg-1: #0d100d;
+    --bg-2: #111411;
+    --bg-card: rgba(255,255,255,0.03);
+    --border: rgba(255,255,255,0.08);
+    --border-hover: rgba(255,255,255,0.15);
+    --text: #f0f0ee;
+    --text-2: #8a8f87;
+    --text-3: #555a52;
+    --radius: 12px;
+    --radius-lg: 20px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Geist', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── GRID NOISE BACKGROUND ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(74,155,60,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(74,155,60,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+    height: 60px;
+    background: rgba(8,10,8,0.8);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+
+  .logo-z {
+    width: 32px; height: 32px;
+    background: linear-gradient(135deg, #4a9b3c, #2d6b24);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: white;
+    transform: rotate(-8deg);
+    flex-shrink: 0;
+  }
+
+  .logo-text { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; color:white; }
+  .logo-text span { color: var(--text-2); font-weight: 400; }
+
+  .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+
+  .nav-links a {
+    display: block; padding: 6px 14px;
+    text-decoration: none; color: var(--text-2);
+    font-size: 13.5px; font-weight: 400;
+    border-radius: 8px;
+    transition: color 0.15s, background 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+
+  .nav-cta {
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .btn-ghost {
+    padding: 6px 14px; border-radius: 8px;
+    background: none; border: 1px solid var(--border);
+    color: var(--text-2); font-size: 13px; cursor: pointer;
+    font-family: inherit; transition: all 0.15s;
+    text-decoration: none;
+  }
+  .btn-ghost:hover { border-color: var(--border-hover); color: var(--text); }
+
+  .btn-primary {
+    padding: 6px 16px; border-radius: 8px;
+    background: var(--green); border: none;
+    color: white; font-size: 13px; font-weight: 500; cursor: pointer;
+    font-family: inherit; transition: all 0.15s;
+    text-decoration: none;
+  }
+  .btn-primary:hover { background: var(--green-light); }
+
+  /* ── SECTIONS ── */
+  section { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 1.5rem 4rem;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-glow {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(74,155,60,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 4px 12px 4px 6px;
+    border: 1px solid var(--green-border);
+    border-radius: 99px;
+    background: var(--green-dim);
+    font-size: 12px; color: var(--green-light);
+    margin-bottom: 2rem;
+    animation: fadeInDown 0.6s ease both;
+  }
+
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--green-light);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.85); }
+  }
+
+  .hero h1 {
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 800;
+    letter-spacing: -3px;
+    line-height: 0.95;
+    margin-bottom: 1.5rem;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  }
+
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #4a9b3c, #8fda80);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    max-width: 520px; margin: 0 auto 2.5rem;
+    color: var(--text-2); font-size: 16px; line-height: 1.7;
+    animation: fadeInUp 0.7s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeInUp 0.7s ease 0.3s both;
+  }
+
+  .btn-lg {
+    padding: 10px 24px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; cursor: pointer;
+    font-family: inherit; text-decoration: none;
+    transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+
+  .btn-lg.primary {
+    background: var(--green);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    box-shadow: 0 0 20px rgba(74,155,60,0.3);
+  }
+  .btn-lg.primary:hover { background: var(--green-light); box-shadow: 0 0 30px rgba(74,155,60,0.4); }
+
+  .btn-lg.outline {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+  }
+  .btn-lg.outline:hover { background: rgba(255,255,255,0.08); border-color: var(--border-hover); }
+
+  /* ── STATS TICKER ── */
+  .stats-strip {
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap;
+  }
+
+  .stat-item { text-align: center; }
+  .stat-num {
+    font-size: 2rem; font-weight: 700;
+    background: linear-gradient(135deg, #fff, #aaa);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 12px; color: var(--text-3); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* ── LOGOS (partenaires) ── */
+  .partners {
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .partners-label {
+    font-size: 12px; color: var(--text-3); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 1.5rem;
+  }
+
+  .partners-logos {
+    display: flex; align-items: center; justify-content: center;
+    gap: 2rem; flex-wrap: wrap; opacity: 0.5;
+  }
+
+  .partner-logo {
+    font-size: 13px; font-weight: 600;
+    color: var(--text-2); letter-spacing: 0.05em;
+    padding: 6px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--green-light);
+    margin-bottom: 1rem;
+  }
+
+  .section-label::before {
+    content: ''; display: block;
+    width: 16px; height: 1px; background: var(--green-light);
+  }
+
+  .section-title {
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; letter-spacing: -1.5px;
+    line-height: 1.1; margin-bottom: 1rem;
+  }
+
+  .section-desc {
+    color: var(--text-2); font-size: 15px;
+    max-width: 480px; line-height: 1.7;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 6rem 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card-stack {
+    position: relative; height: 360px;
+  }
+
+  .acard {
+    position: absolute;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    backdrop-filter: blur(12px);
+  }
+
+  .acard.main {
+    top: 0; left: 0; right: 0;
+    background: linear-gradient(145deg, rgba(74,155,60,0.08), rgba(0,0,0,0));
+    border-color: var(--green-border);
+  }
+
+  .acard.float1 {
+    bottom: 0; right: -20px;
+    width: 200px;
+    background: rgba(255,255,255,0.03);
+    animation: float 4s ease-in-out infinite;
+  }
+
+  .acard.float2 {
+    top: 160px; left: -20px;
+    width: 180px;
+    background: rgba(255,255,255,0.03);
+    animation: float 4s ease-in-out infinite 1.5s;
+  }
+
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
+  .acard-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; margin-bottom: 0.75rem;
+  }
+
+  .acard-title { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .acard-sub { font-size: 12px; color: var(--text-2); }
+
+  .acard.main .acard-icon { width: 44px; height: 44px; font-size: 22px; margin-bottom: 1rem; }
+  .acard.main .acard-title { font-size: 16px; margin-bottom: 6px; }
+  .acard.main .acard-sub { font-size: 14px; }
+
+  .about-content .section-desc { max-width: 100%; }
+
+  .about-tags {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1.5rem;
+  }
+
+  .tag {
+    padding: 4px 12px; border-radius: 99px;
+    border: 1px solid var(--border);
+    font-size: 12px; color: var(--text-2);
+    background: var(--bg-card);
+  }
+
+  /* ── SERVICES ── */
+  .services {
+    padding: 6rem 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .services-header {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+    margin-bottom: 3rem; align-items: end;
+  }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--border);
+  }
+
+  .service-card {
+    padding: 2rem 1.75rem;
+    background: var(--bg-1);
+    transition: background 0.2s;
+    cursor: default;
+  }
+
+  .service-card:hover { background: var(--bg-2); }
+
+  .service-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--green-dim); border: 1px solid var(--green-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; margin-bottom: 1.25rem;
+  }
+
+  .service-title { font-size: 15px; font-weight: 600; margin-bottom: 0.5rem; }
+  .service-desc { font-size: 13px; color: var(--text-2); line-height: 1.6; }
+
+  /* ── SKILLFAST ── */
+  .skillfast {
+    padding: 6rem 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .workshops-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    margin-top: 3rem;
+  }
+
+  .workshop-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    background: var(--bg-card);
+    transition: border-color 0.2s, background 0.2s;
+    position: relative; overflow: hidden;
+    cursor: pointer;
+  }
+
+  .workshop-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--green-border), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .workshop-card:hover { border-color: var(--green-border); background: rgba(74,155,60,0.04); }
+  .workshop-card:hover::before { opacity: 1; }
+
+  .workshop-tag {
+    display: inline-block; padding: 3px 10px;
+    border-radius: 99px; font-size: 11px; font-weight: 500;
+    margin-bottom: 1rem;
+  }
+
+  .workshop-tag.free { background: var(--green-dim); color: var(--green-light); border: 1px solid var(--green-border); }
+  .workshop-tag.paid { background: rgba(255,200,50,0.1); color: #e6b930; border: 1px solid rgba(255,200,50,0.25); }
+
+  .workshop-title { font-size: 18px; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: -0.5px; }
+  .workshop-sub { font-size: 13px; color: var(--text-2); margin-bottom: 1.25rem; }
+
+  .workshop-meta {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    font-size: 12px; color: var(--text-3);
+  }
+
+  .workshop-meta span { display: flex; align-items: center; gap: 4px; }
+
+  /* ── CIBLES ── */
+  .targets {
+    padding: 6rem 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .targets-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    margin-top: 3rem;
+  }
+
+  .target-card {
+    padding: 2rem 1.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .target-card:hover {
+    border-color: var(--green-border);
+    background: var(--green-dim);
+    transform: translateY(-4px);
+  }
+
+  .target-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .target-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .target-desc { font-size: 12px; color: var(--text-2); }
+
+  /* ── CTA ── */
+  .cta-section {
+    padding: 8rem 1.5rem;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(74,155,60,0.1), transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-box {
+    max-width: 600px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+
+  .cta-box h2 {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 800; letter-spacing: -2px;
+    line-height: 1.05; margin-bottom: 1.25rem;
+  }
+
+  .cta-box p { color: var(--text-2); font-size: 15px; margin-bottom: 2rem; }
+
+  .cta-form {
+    display: flex; gap: 8px; max-width: 400px; margin: 0 auto;
+  }
+
+  .cta-input {
+    flex: 1; padding: 10px 16px;
+    border-radius: 10px; border: 1px solid var(--border);
+    background: rgba(255,255,255,0.05);
+    color: var(--text); font-size: 14px; font-family: inherit;
+    outline: none; transition: border-color 0.15s;
+  }
+  .cta-input:focus { border-color: var(--green-border); }
+  .cta-input::placeholder { color: var(--text-3); }
+
+  /* ── FOOTER ── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 3rem 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem;
+  }
+
+  .footer-brand .logo-text { font-size: 18px; }
+  .footer-brand p { margin-top: 0.75rem; font-size: 13px; color: var(--text-2); line-height: 1.6; max-width: 240px; }
+
+  .footer-col h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 0.5rem; }
+  .footer-col ul li a { font-size: 13px; color: var(--text-2); text-decoration: none; transition: color 0.15s; }
+  .footer-col ul li a:hover { color: var(--text); }
+
+  .footer-bottom {
+    border-top: 1px solid var(--border);
+    padding: 1.5rem;
+    text-align: center;
+    font-size: 12px; color: var(--text-3);
+  }
+
+  .mono { font-family: 'Geist Mono', monospace; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    border: none; height: 1px;
+    background: var(--border); margin: 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about { grid-template-columns: 1fr; gap: 2rem; }
+    .about-card-stack { height: 280px; }
+    .services-header { grid-template-columns: 1fr; }
+    .services-grid { grid-template-columns: 1fr; }
+    .workshops-grid { grid-template-columns: 1fr; }
+    .targets-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { grid-template-columns: 1fr 1fr; }
+    .cta-form { flex-direction: column; }
+  }
+
+  /* Code terminal block */
+  .terminal {
+    background: #0d110d;
+    border: 1px solid var(--green-border);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12.5px;
+    color: #aaa;
+    margin-top: 1.5rem;
+  }
+
+  .terminal .line { margin-bottom: 4px; }
+  .terminal .prompt { color: var(--green-light); }
+  .terminal .cmd { color: #fff; }
+  .terminal .out { color: #555; }
+
+  /* MISSION badges */
+  .mission-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 2rem;
+  }
+
+  .mission-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-card);
+  }
+
+  .mission-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green); flex-shrink: 0; margin-top: 6px;
+  }
+
+  .mission-text { font-size: 13px; color: var(--text-2); }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-z">Z</div>
+    <div class="logo-text">Zamany<span>Lab</span></div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">À propos</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#skillfast">SkillFast</a></li>
+    <li><a href="#cibles">Cibles</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="#contact" class="btn-ghost">Nous contacter</a>
+    <a href="#skillfast" class="btn-primary">Voir les formations</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Centre d'Innovation — Niamey, Niger
+  </div>
+  <h1>
+    L'innovation<br/>
+    <em>numérique</em><br/>
+    au Niger
+  </h1>
+  <p class="hero-sub">
+    ZamanyLab est un FabLab dédié à l'autonomisation technologique des entrepreneurs et des jeunes, avec des solutions adaptées aux réalités locales.
+  </p>
+  <div class="hero-actions">
+    <a href="#skillfast" class="btn-lg primary">
+      Voir les formations
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+    <a href="#about" class="btn-lg outline">Découvrir ZamanyLab</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-strip reveal">
+  <div class="stat-item">
+    <div class="stat-num mono">6+</div>
+    <div class="stat-label">Workshops réalisés</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num mono">4</div>
+    <div class="stat-label">Domaines d'expertise</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num mono">100%</div>
+    <div class="stat-label">Adapté au local</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num mono">∞</div>
+    <div class="stat-label">Potentiel d'innovation</div>
+  </div>
+</div>
+
+<!-- PARTENAIRES -->
+<div class="partners reveal">
+  <div class="partners-label">Partenaires & Soutiens</div>
+  <div class="partners-logos">
+    <span class="partner-logo">Sahelio</span>
+    <span class="partner-logo">ADM</span>
+    <span class="partner-logo">Afiyaë</span>
+    <span class="partner-logo">GIZ</span>
+    <span class="partner-logo">CANSI</span>
+    <span class="partner-logo">Swisscontact</span>
+  </div>
+</div>
+
+<hr class="divider"/>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual reveal">
+    <div class="about-card-stack">
+      <div class="acard main">
+        <div class="acard-icon">🔬</div>
+        <div class="acard-title">Centre d'Innovation & FabLab</div>
+        <div class="acard-sub">Un espace de création, d'expérimentation et de formation aux technologies numériques, ancré dans les réalités du Niger.</div>
+        <div class="terminal" style="margin-top: 1rem;">
+          <div class="line"><span class="prompt">$</span> <span class="cmd">zamany --mission</span></div>
+          <div class="line out">→ Autonomisation technologique</div>
+          <div class="line out">→ Innovation locale responsable</div>
+          <div class="line out">→ Intégration numérique éthique</div>
+        </div>
+      </div>
+      <div class="acard float1">
+        <div class="acard-icon">🤖</div>
+        <div class="acard-title">IA Locale</div>
+        <div class="acard-sub">Intelligence artificielle offline</div>
+      </div>
+      <div class="acard float2">
+        <div class="acard-icon">⚙️</div>
+        <div class="acard-title">Fabrication numérique</div>
+        <div class="acard-sub">Laser, broderie, impression 3D</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content reveal">
+    <div class="section-label">Présentation</div>
+    <h2 class="section-title">Un FabLab pensé pour le Niger</h2>
+    <p class="section-desc">
+      ZamanyLab est un cadre de formation et de réflexion sur l'utilisation du digital adapté aux réalités locales. Nous aidons entrepreneurs, jeunes et entreprises à s'intégrer pleinement dans un monde numérique, de façon éthique et responsable.
+    </p>
+    <div class="mission-grid">
+      <div class="mission-item">
+        <div class="mission-dot"></div>
+        <div class="mission-text">Formations pratiques sur les technologies numériques</div>
+      </div>
+      <div class="mission-item">
+        <div class="mission-dot"></div>
+        <div class="mission-text">Fabrication de solutions locales innovantes</div>
+      </div>
+      <div class="mission-item">
+        <div class="mission-dot"></div>
+        <div class="mission-text">Valorisation des produits locaux (textile, agro, cosmétique)</div>
+      </div>
+      <div class="mission-item">
+        <div class="mission-dot"></div>
+        <div class="mission-text">Plaidoyer pour un écosystème numérique favorable</div>
+      </div>
+    </div>
+    <div class="about-tags">
+      <span class="tag">FabLab</span>
+      <span class="tag">Innovation</span>
+      <span class="tag">IA locale</span>
+      <span class="tag">Fabrication numérique</span>
+      <span class="tag">Formation</span>
+      <span class="tag">Niamey</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="services-header">
+    <div class="reveal">
+      <div class="section-label">Nos Services</div>
+      <h2 class="section-title">Ce que nous faisons</h2>
+    </div>
+    <div class="reveal">
+      <p class="section-desc">
+        Des solutions numériques concrètes, adaptées aux défis et opportunités du Niger.
+      </p>
+    </div>
+  </div>
+
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-icon">🎓</div>
+      <div class="service-title">Formations SkillFast</div>
+      <div class="service-desc">Workshops intensifs en fabrication numérique, IA, broderie, modélisme — gratuits ou accessibles.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">⚡</div>
+      <div class="service-title">Fabrication locale</div>
+      <div class="service-desc">Découpe laser, broderie numérique, impression 3D pour artisans, créateurs et entrepreneurs.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤖</div>
+      <div class="service-title">IA hors ligne</div>
+      <div class="service-desc">Solutions d'intelligence artificielle 100% offline pour étudiants et professionnels sans accès internet.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👗</div>
+      <div class="service-title">Tech Textile</div>
+      <div class="service-desc">Modélisme numérique, simulation réaliste, abaya et broderie numérique pour la filière mode africaine.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🌱</div>
+      <div class="service-title">Agro & Cosmétique</div>
+      <div class="service-desc">Solutions technologiques pour valoriser les produits agroalimentaires et cosmétiques locaux.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <div class="service-title">Accompagnement entreprises</div>
+      <div class="service-desc">Conseil et intégration de solutions numériques pour PME, institutions et particuliers du Niger.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- SKILLFAST -->
+<section class="skillfast" id="skillfast">
+  <div class="reveal">
+    <div class="section-label">SkillFast by ZamanyLab</div>
+    <h2 class="section-title">Nos derniers workshops</h2>
+    <p class="section-desc">Des formations pratiques en présentiel à Niamey, souvent gratuites avec pause café offerte.</p>
+  </div>
+
+  <div class="workshops-grid">
+    <div class="workshop-card reveal">
+      <span class="workshop-tag free">Gratuit</span>
+      <div class="workshop-title">Fabrication numérique au Laser</div>
+      <div class="workshop-sub">Conception, découpe laser et production digitale — artisanat numérique, précision industrielle, créativité appliquée.</div>
+      <div class="workshop-meta">
+        <span>📅 21 Février 2026</span>
+        <span>🕙 10:00 – 13:00</span>
+        <span>📍 Banifandou, Niamey</span>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal">
+      <span class="workshop-tag free">Gratuit</span>
+      <div class="workshop-title">Modélisme numérique pour Stylistes</div>
+      <div class="workshop-sub">Création de vêtements virtuels, simulation réaliste, préparation à la production et emballages mode.</div>
+      <div class="workshop-meta">
+        <span>📅 21 Janvier 2026</span>
+        <span>🕙 10:00 – 14:30</span>
+        <span>📍 Hôtel Noom, Niamey</span>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal">
+      <span class="workshop-tag free">Gratuit</span>
+      <div class="workshop-title">SheTex Innov — Broderie numérique</div>
+      <div class="workshop-sub">Abaya et broderie numérique unique, robe de princesse, box d'emballage pour produits de mode.</div>
+      <div class="workshop-meta">
+        <span>📅 21 Janvier 2026</span>
+        <span>🕙 10:00 – 12:30</span>
+        <span>📍 Banifandou, Niamey</span>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal">
+      <span class="workshop-tag paid">5 000 CFA</span>
+      <div class="workshop-title">Le Web sans Internet — Étudiants</div>
+      <div class="workshop-sub">Transformez votre smartphone en moteur IA 100% offline — serveur offline, IA hors ligne, cas d'usage scolaires.</div>
+      <div class="workshop-meta">
+        <span>📅 07 Février 2026</span>
+        <span>🕙 10:30 – 17:00</span>
+        <span>📍 Banifandou, Niamey</span>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal">
+      <span class="workshop-tag paid">10 000 CFA</span>
+      <div class="workshop-title">Le Web sans Internet — Professionnels</div>
+      <div class="workshop-sub">IA locale pour entreprises : maîtrise des empreintes numériques, sécurité des données, productivité IA offline.</div>
+      <div class="workshop-meta">
+        <span>📅 14 Février 2026</span>
+        <span>🕙 10:00 – 13:00</span>
+        <span>📍 Hôtel Noom, Niamey</span>
+      </div>
+    </div>
+
+    <div class="workshop-card reveal">
+      <span class="workshop-tag free">Gratuit</span>
+      <div class="workshop-title">Broderie numérique</div>
+      <div class="workshop-sub">Maîtrisez la broderie machine assistée par ordinateur pour créer des motifs précis et personnalisés.</div>
+      <div class="workshop-meta">
+        <span>📅 07 Février 2026</span>
+        <span>🕙 10:00 – 12:30</span>
+        <span>📍 Banifandou, Niamey</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CIBLES -->
+<section class="targets" id="cibles">
+  <div class="reveal" style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">Nos Cibles</div>
+    <h2 class="section-title">Pour qui ?</h2>
+    <p class="section-desc" style="margin: 0 auto;">ZamanyLab accompagne toutes les personnes désireuses de s'intégrer dans le numérique.</p>
+  </div>
+  <div class="targets-grid">
+    <div class="target-card reveal">
+      <span class="target-emoji">👤</span>
+      <div class="target-name">Particuliers</div>
+      <div class="target-desc">Développez vos compétences numériques personnelles</div>
+    </div>
+    <div class="target-card reveal">
+      <span class="target-emoji">🚀</span>
+      <div class="target-name">Entrepreneurs</div>
+      <div class="target-desc">Perfectionner vos activités génératrices de revenus grâce au digital</div>
+    </div>
+    <div class="target-card reveal">
+      <span class="target-emoji">🎓</span>
+      <div class="target-name">Jeunes</div>
+      <div class="target-desc">Éveil à l'innovation, compétences digitales et aggrotech</div>
+    </div>
+    <div class="target-card reveal">
+      <span class="target-emoji">🏢</span>
+      <div class="target-name">Entreprises & Institutions</div>
+      <div class="target-desc">Intégration et optimisation de solutions numériques</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider"/>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div class="cta-box reveal">
+    <div class="section-label" style="justify-content:center;">Rejoignez-nous</div>
+    <h2>Prêt à innover<br/>avec nous ?</h2>
+    <p>Inscrivez-vous à notre newsletter pour être informé de nos prochains workshops et événements.</p>
+    <div class="cta-form">
+      <input type="email" class="cta-input" placeholder="votre@email.com"/>
+      <a href="mailto:zamanylab@gmail.com" class="btn-lg primary" style="white-space:nowrap;">S'inscrire</a>
+    </div>
+    <p style="margin-top: 1rem; font-size: 12px; color: var(--text-3);">
+      📍 Banifandou, Niamey — Niger &nbsp;·&nbsp; 📞 +227 75045034
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <div class="nav-logo" style="text-decoration:none;">
+      <div class="logo-z">Z</div>
+      <div class="logo-text" style="font-size:16px;">Zamany<span>Lab</span></div>
+    </div>
+    <p>Centre d'Innovation et FabLab dédié à l'autonomisation technologique éthique au Niger.</p>
+  </div>
+  <div class="footer-col">
+    <h4>Navigation</h4>
+    <ul>
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#skillfast">SkillFast</a></li>
+      <li><a href="#cibles">Nos cibles</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Programmes</h4>
+    <ul>
+      <li><a href="#">SkillFast</a></li>
+      <li><a href="#">SheTex Innov</a></li>
+      <li><a href="#">IA Locale</a></li>
+      <li><a href="#">FabLab</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h4>Contact</h4>
+    <ul>
+      <li><a href="mailto:zamanylab@gmail.com">zamanylab@gmail.com</a></li>
+      <li><a href="tel:+22775045034">+227 75045034</a></li>
+      <li><a href="#">Banifandou, Niamey</a></li>
+    </ul>
+  </div>
+</footer>
+
+<div class="footer-bottom">
+  © 2026 ZamanyLab — Centre d'Innovation Numérique &nbsp;·&nbsp; Niamey, Niger
+</div>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.reveal').forEach((el, i) => {
+  el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+  observer.observe(el);
+});
+
+// Nav active state
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? '#f0f0ee' : '';
+  });
+});
+</script>
+</body>
+</html>
